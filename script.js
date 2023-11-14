@@ -1,11 +1,21 @@
 
 const fileInputEl = document.querySelector("#fileInput")
 
+function makeBars(data) {
+
+    console.log(data);
+
+}
+
 function makeData(table) {
 
     const years = table[0].filter(n => n)
     table.shift()
     const data = {}
+
+    years.forEach(year => {
+        data[year] = {}
+    })
     
     let carTypeCount = 0
 
@@ -16,20 +26,34 @@ function makeData(table) {
         }
     }
 
-    console.log(carTypeCount);
-
     const areasCount = table.length / carTypeCount
-    
-    console.log(areasCount);
 
 
     for (let i = 0; i < areasCount * carTypeCount; i += 3) {
         
-        console.log(table[i]);
+        years.forEach(year => {
+            data[year][table[i][0]] = {}
+        })
+        
 
+        for (let j = 0; j < carTypeCount; j++) {
+            
+            const key = table[i][0]
+            const row = [...table[i + j]]
+            row.shift()
+            const type = row[0]
+            row.shift()
+
+            row.forEach((num, index) => {
+                
+                data[years[index]][key][type] = num
+            
+            })
+
+        }
         
     }
-
+    makeBars(data)
 }
 
 
