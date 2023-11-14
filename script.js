@@ -14,10 +14,8 @@ function makeBar(info) {
     const total = Object.values(info).reduce((n, i) => Number(n) + Number(i))
 
 
-
-
     infoArr.forEach(typeAndNum => {
-        percent = Math.floor((Number(typeAndNum[1]) / total) * 100)
+        percent = Math.round((Number(typeAndNum[1]) / total) * 100)
         
         const barPartEl = document.createElement("div")
         
@@ -34,21 +32,28 @@ function makeBar(info) {
 
 function makeBars(data) {
 
-    console.log(data);
-
     for (const year in data) {
         const divEl = document.createElement("div")
 
+        divEl.className = "box"
+
         divEl.innerHTML += `<h1>${year}</h1>`
 
+        const colorsArr = Object.entries(colors) 
+
+        divEl.innerHTML += `<div class="colors">${colorsArr.map(([type, color]) => `<p style="color: ${color};">${type}</p>`).join("")}</div>`
+
         for (const area in data[year]) {
-            
+
+            const barDivEl = document.createElement("div")
+
+            barDivEl.innerHTML += `<p>${area}</p>`
+
             const barEl = makeBar(data[year][area])
 
-            divEl.appendChild(barEl)
-
+            barDivEl.appendChild(barEl)
+            divEl.appendChild(barDivEl)
         }
-
         barContainerEl.appendChild(divEl)
     }
 }
@@ -81,7 +86,7 @@ function makeData(table) {
     const areasCount = table.length / carTypeCount
 
 
-    for (let i = 0; i < areasCount * carTypeCount; i += 3) {
+    for (let i = 0; i < areasCount * carTypeCount; i += carTypeCount) {
         
         years.forEach(year => {
             data[year][table[i][0]] = {}
