@@ -1,0 +1,12 @@
+.bar {
+    width: 200px;
+    height: 20px;
+    display: inline-flex;
+    margin: 2px;
+
+    border: 1px black solid;
+}
+
+.barPart {
+    height: 20px;
+}
