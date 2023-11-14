@@ -14,18 +14,19 @@ function makeBar(info) {
     const total = Object.values(info).reduce((n, i) => Number(n) + Number(i))
 
 
-    infoArr.forEach(typeAndNum => {
+    infoArr.forEach((typeAndNum, index) => {
         percent = Math.round((Number(typeAndNum[1]) / total) * 100)
         
         const barPartEl = document.createElement("div")
         
         barPartEl.className = "barPart"
+        if (index + 1 === infoArr.length) barPartEl.style.flex = "1"
         barPartEl.style.width = `${percent}%`
         barPartEl.style.backgroundColor = colors[typeAndNum[0]]
 
         barEl.appendChild(barPartEl)
 
-    });
+    })
 
     return barEl
 }
